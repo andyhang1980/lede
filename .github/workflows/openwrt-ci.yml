@@ -46,11 +46,148 @@ jobs:
 
       - name: Update feeds
         run: |
-          sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
+          echo 'src-git kenzo https://github.com/kenzok8/openwrt-packages' >>feeds.conf.default
+          echo 'src-git small https://github.com/kenzok8/small' >>feeds.conf.default
+          echo 'src-git haibo https://github.com/haiibo/openwrt-packages' >>feeds.conf.default
+          echo 'src-git liuran001 https://github.com/liuran001/openwrt-packages' >>feeds.conf.default
+          sed -i 's/\"#src-git\"/\"src-git\"/g' ./feeds.conf.default
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
       - name: Generate configuration file
+      echo 'src-git kenzo https://github.com/kenzok8/openwrt-packages' >>feeds.conf.default
+echo 'src-git small https://github.com/kenzok8/small' >>feeds.conf.default
+echo 'src-git haibo https://github.com/haiibo/openwrt-packages' >>feeds.conf.default
+echo 'src-git liuran001 https://github.com/liuran001/openwrt-packages' >>feeds.conf.default
+
+src-git kenzo https://github.com/kenzok8/openwrt-packages
+src-git small https://github.com/kenzok8/small
+src-git haibo https://github.com/haiibo/openwrt-packages
+src-git liuran001 https://github.com/liuran001/openwrt-packages
+
+          echo 'src-git helloworld https://github.com/fw876/helloworld' >> ./feeds.conf.default
+          sed -i 's/\"#src-git\"/\"src-git\"/g' ./feeds.conf.default
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+
+echo 'src-git helloworld https://github.com/fw876/helloworld' >> ./feeds.conf.default
+
+
+
+ - name: Generate configuration file
+        run: |
+          rm -f ./.config*
+          touch ./.config
+          cat >> .config <<EOF
+          #
+          # ========================固件定制部分========================
+          #
+          # 示例配置，下面是 diff.config 文件中的内容
+          CONFIG_TARGET_ramips=y
+          CONFIG_TARGET_ramips_mt7621=y
+		      CONFIG_TARGET_ramips_mt7621_DEVICE_phicomm_k2p=y
+          CONFIG_KERNEL_PAGE_POOL=y
+          CONFIG_MTK_CHIP_MT7603E_MT7612E=y
+          # CONFIG_MTK_CHIP_MT7615E is not set
+          # CONFIG_OPENSSL_WITH_IDEA is not set
+          # CONFIG_OPENSSL_WITH_MDC2 is not set
+          # CONFIG_OPENSSL_WITH_SEED is not set
+          # CONFIG_OPENSSL_WITH_WHIRLPOOL is not set
+          CONFIG_PACKAGE_MAC80211_DEBUGFS=y
+          CONFIG_PACKAGE_MAC80211_MESH=y
+          CONFIG_PACKAGE_boost=y
+          CONFIG_PACKAGE_boost-date_time=y
+          CONFIG_PACKAGE_boost-program_options=y
+          CONFIG_PACKAGE_boost-system=y
+          CONFIG_PACKAGE_diffutils=y
+          CONFIG_PACKAGE_hostapd-common=y
+          CONFIG_PACKAGE_ipt2socks=y
+          CONFIG_PACKAGE_iptables-mod-conntrack-extra=y
+          CONFIG_PACKAGE_iptables-mod-iprange=y
+          CONFIG_PACKAGE_iptables-mod-socket=y
+          CONFIG_PACKAGE_iw=y
+          # CONFIG_PACKAGE_kmod-br-netfilter is not set
+          CONFIG_PACKAGE_kmod-cfg80211=y
+          CONFIG_PACKAGE_kmod-crypto-ccm=y
+          CONFIG_PACKAGE_kmod-crypto-cmac=y
+          CONFIG_PACKAGE_kmod-crypto-ctr=y
+          CONFIG_PACKAGE_kmod-crypto-gcm=y
+          CONFIG_PACKAGE_kmod-crypto-gf128=y
+          CONFIG_PACKAGE_kmod-crypto-ghash=y
+          CONFIG_PACKAGE_kmod-crypto-hmac=y
+          CONFIG_PACKAGE_kmod-crypto-rng=y
+          CONFIG_PACKAGE_kmod-crypto-seqiv=y
+          CONFIG_PACKAGE_kmod-crypto-sha256=y
+          CONFIG_PACKAGE_kmod-ipt-conntrack-extra=y
+          CONFIG_PACKAGE_kmod-ipt-iprange=y
+          CONFIG_PACKAGE_kmod-ipt-socket=y
+          CONFIG_PACKAGE_kmod-mac80211=y
+          CONFIG_PACKAGE_kmod-mt76-core=y
+         CONFIG_PACKAGE_kmod-mt7603=y
+         # CONFIG_PACKAGE_kmod-mt7615d is not set
+         # CONFIG_PACKAGE_kmod-mt7615d_dbdc is not set
+         CONFIG_PACKAGE_kmod-mt76x02-common=y
+         CONFIG_PACKAGE_kmod-mt76x2=y
+         CONFIG_PACKAGE_kmod-mt76x2-common=y
+         CONFIG_PACKAGE_kmod-nf-socket=y
+         CONFIG_PACKAGE_kmod-nls-base=y
+         CONFIG_PACKAGE_kmod-usb-core=y
+         CONFIG_PACKAGE_kmod-usb-ledtrig-usbport=y
+         CONFIG_PACKAGE_kmod-usb-xhci-hcd=y
+         CONFIG_PACKAGE_kmod-usb-xhci-mtk=y
+         CONFIG_PACKAGE_kmod-usb3=y
+         CONFIG_PACKAGE_libcap=y
+         CONFIG_PACKAGE_libstdcpp=y
+# CONFIG_PACKAGE_luci-app-bypass_INCLUDE_ShadowsocksR_Libev_Client is not set
+# CONFIG_PACKAGE_luci-app-bypass_INCLUDE_Simple_Obfs is not set
+# CONFIG_PACKAGE_luci-app-bypass_INCLUDE_Socks_Server is not set
+# CONFIG_PACKAGE_luci-app-bypass_INCLUDE_Xray is not set
+# CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_ShadowsocksR_Libev_Client is not set
+# CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Shadowsocks_Libev_Client is not set
+# CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Simple_Obfs is not set
+# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ShadowsocksR_Libev_Client is not set
+# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Client is not set
+# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Simple_Obfs is not set
+# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Trojan_Plus is not set
+# CONFIG_PACKAGE_luci-app-rclone_INCLUDE_rclone-ng is not set
+# CONFIG_PACKAGE_luci-app-rclone_INCLUDE_rclone-webui is not set
+CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_IPT2Socks=y
+CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_MosDNS=y
+# CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Libev_Client is not set
+CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan=y
+# CONFIG_PACKAGE_maccalc is not set
+CONFIG_PACKAGE_mosdns=y
+CONFIG_PACKAGE_mt_wifi=y
+# CONFIG_PACKAGE_shadowsocksr-libev-ssr-local is not set
+# CONFIG_PACKAGE_shadowsocksr-libev-ssr-redir is not set
+CONFIG_PACKAGE_trojan=y
+CONFIG_PACKAGE_v2dat=y
+CONFIG_PACKAGE_wireless-regdb=y
+CONFIG_PACKAGE_wpad=y
+CONFIG_PACKAGE_yq=y
+CONFIG_WPA_MSG_MIN_PRIORITY=3
+CONFIG_boost-compile-visibility-hidden=y
+CONFIG_boost-runtime-shared=y
+CONFIG_boost-static-and-shared-libs=y
+CONFIG_boost-variant-release=y
+# CONFIG_WPA_MBO_SUPPORT is not set
+          #
+          # ========================固件定制部分结束========================
+          #
+          EOF
+          sed -i 's/^[ \t]*//g' ./.config
+          make defconfig
+          # 网络配置信息，将从 zzz-default-settings 文件的第2行开始添加
+          sed -i "2i # network config" ./package/lean/default-settings/files/zzz-default-settings
+          # 默认 IP 地址，旁路由时不会和主路由的 192.168.1.1 冲突
+          sed -i "3i uci set network.lan.ipaddr='192.168.1.254'" ./package/lean/default-settings/files/zzz-default-settings
+          sed -i "4i uci set network.lan.proto='static'" ./package/lean/default-settings/files/zzz-default-settings # 静态 IP
+          sed -i "5i uci set network.lan.type='bridge'" ./package/lean/default-settings/files/zzz-default-settings  # 接口类型：桥接
+          sed -i "6i uci set network.lan.ifname='eth0'" ./package/lean/default-settings/files/zzz-default-settings  # 网络端口：默认 eth0，第一个接口
+          sed -i "7i uci set network.lan.netmask='255.255.255.0'" ./package/lean/default-settings/files/zzz-default-settings    # 子网掩码
+          sed -i "8i uci set network.lan.gateway='192.168.1.1'" ./package/lean/default-settings/files/zzz-default-settings  # 默认网关地址（主路由 IP）
+          sed -i "9i uci set network.lan.dns='192.168.1.1'" ./package/lean/default-settings/files/zzz-default-settings  # 默认上游 DNS 地址
+          sed -i "10i uci commit network\n" ./package/lean/default-settings/files/zzz-default-settings
         run: make defconfig
 
       - name: Make download
